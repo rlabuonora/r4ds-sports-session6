@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Presentation Ninja</title>
+    <title>Session 6</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Yihui Xie" />
-    <meta name="author" content="Garrick Aden-Buie" />
-    <meta name="date" content="2023-11-22" />
     <script src="index_files/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
@@ -13,11 +10,7 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Presentation Ninja
-## ⚔️ xaringan +<br/>😎 xaringanthemer
-### Yihui Xie
-### Garrick Aden-Buie
-### 2023-11-22
+# Session 6
 
 ---
 
@@ -27,8 +20,282 @@ class: center, middle, inverse, title-slide
 
 
 
+---
+## Types
 
-## Hello
+R has different types of objects.
+
+
+```r
+class(mtcars)
+```
+
+```
+## [1] "data.frame"
+```
+
+
+```r
+class(c(1, 2, 3))
+```
+
+```
+## [1] "numeric"
+```
+
+
+```r
+class(c("Hello", "Goodbye"))
+```
+
+```
+## [1] "character"
+```
+
+
+---
+## Data Frames
+
+- Data frames are special type of object composed of multiple objects.
+
+
+```r
+glimpse(mpg)
+```
+
+```
+## Rows: 234
+## Columns: 11
+## $ manufacturer &lt;chr&gt; "audi", "audi", "audi", "audi", "audi", "audi", "audi", "…
+## $ model        &lt;chr&gt; "a4", "a4", "a4", "a4", "a4", "a4", "a4", "a4 quattro", "…
+## $ displ        &lt;dbl&gt; 1.8, 1.8, 2.0, 2.0, 2.8, 2.8, 3.1, 1.8, 1.8, 2.0, 2.0, 2.…
+## $ year         &lt;int&gt; 1999, 1999, 2008, 2008, 1999, 1999, 2008, 1999, 1999, 200…
+## $ cyl          &lt;int&gt; 4, 4, 4, 4, 6, 6, 6, 4, 4, 4, 4, 6, 6, 6, 6, 6, 6, 8, 8, …
+## $ trans        &lt;chr&gt; "auto(l5)", "manual(m5)", "manual(m6)", "auto(av)", "auto…
+## $ drv          &lt;chr&gt; "f", "f", "f", "f", "f", "f", "f", "4", "4", "4", "4", "4…
+## $ cty          &lt;int&gt; 18, 21, 20, 21, 16, 18, 18, 18, 16, 20, 19, 15, 17, 17, 1…
+## $ hwy          &lt;int&gt; 29, 29, 31, 30, 26, 26, 27, 26, 25, 28, 27, 25, 25, 25, 2…
+## $ fl           &lt;chr&gt; "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p…
+## $ class        &lt;chr&gt; "compact", "compact", "compact", "compact", "compact", "c…
+```
+
+
+---
+## The Manufacturer column
+
+```r
+mpg %&gt;% count(manufacturer)
+```
+
+```
+## # A tibble: 15 × 2
+##    manufacturer     n
+##    &lt;chr&gt;        &lt;int&gt;
+##  1 audi            18
+##  2 chevrolet       19
+##  3 dodge           37
+##  4 ford            25
+##  5 honda            9
+##  6 hyundai         14
+##  7 jeep             8
+##  8 land rover       4
+##  9 lincoln          3
+## 10 mercury          4
+## 11 nissan          13
+## 12 pontiac          5
+## 13 subaru          14
+## 14 toyota          34
+## 15 volkswagen      27
+```
+
+---
+## A new type
+
+- Factors are used to represent categorical variables
+
+```r
+mpg_2 &lt;- mpg %&gt;% 
+  mutate(manufacturer=as.factor(manufacturer))
+
+glimpse(mpg_2)
+```
+
+```
+## Rows: 234
+## Columns: 11
+## $ manufacturer &lt;fct&gt; audi, audi, audi, audi, audi, audi, audi, audi, audi, aud…
+## $ model        &lt;chr&gt; "a4", "a4", "a4", "a4", "a4", "a4", "a4", "a4 quattro", "…
+## $ displ        &lt;dbl&gt; 1.8, 1.8, 2.0, 2.0, 2.8, 2.8, 3.1, 1.8, 1.8, 2.0, 2.0, 2.…
+## $ year         &lt;int&gt; 1999, 1999, 2008, 2008, 1999, 1999, 2008, 1999, 1999, 200…
+## $ cyl          &lt;int&gt; 4, 4, 4, 4, 6, 6, 6, 4, 4, 4, 4, 6, 6, 6, 6, 6, 6, 8, 8, …
+## $ trans        &lt;chr&gt; "auto(l5)", "manual(m5)", "manual(m6)", "auto(av)", "auto…
+## $ drv          &lt;chr&gt; "f", "f", "f", "f", "f", "f", "f", "4", "4", "4", "4", "4…
+## $ cty          &lt;int&gt; 18, 21, 20, 21, 16, 18, 18, 18, 16, 20, 19, 15, 17, 17, 1…
+## $ hwy          &lt;int&gt; 29, 29, 31, 30, 26, 26, 27, 26, 25, 28, 27, 25, 25, 25, 2…
+## $ fl           &lt;chr&gt; "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p…
+## $ class        &lt;chr&gt; "compact", "compact", "compact", "compact", "compact", "c…
+```
+
+
+---
+## Class of the vector
+
+
+```r
+class(mpg_2$manufacturer)
+```
+
+```
+## [1] "factor"
+```
+
+---
+## Factors
+- Behind the scenes, each category of a factor is assigned to a numeric value.
+- The levels 
+
+
+```r
+levels(mpg_2$manufacturer)
+```
+
+```
+##  [1] "audi"       "chevrolet"  "dodge"      "ford"       "honda"     
+##  [6] "hyundai"    "jeep"       "land rover" "lincoln"    "mercury"   
+## [11] "nissan"     "pontiac"    "subaru"     "toyota"     "volkswagen"
+```
+
+- In this case, audi is 1, chevrolet 2, etc.
+- The order of the levels is this codification.
+- It is separate from the order in which the data frame is arranged.
+
+---
+
+## Forcats
+
+- This package has functions to change the order of a factor. Think carefully about what you want.
+
+- `fct_inorder()`: by the order in which they first appear.
+ 
+- In this case, the alphabetical order is the same as the order in which they appear in the data. This might not be true.
+
+
+---
+
+# fct_infreq
+
+- `fct_infreq()`: by number of observations with each level (largest first)
+
+
+```r
+mpg_3 &lt;- mpg %&gt;% 
+  mutate(manufacturer=fct_infreq(manufacturer))
+levels(mpg_3$manufacturer)
+```
+
+```
+##  [1] "dodge"      "toyota"     "volkswagen" "ford"       "chevrolet" 
+##  [6] "audi"       "hyundai"    "subaru"     "nissan"     "honda"     
+## [11] "jeep"       "pontiac"    "land rover" "mercury"    "lincoln"
+```
+
+
+---
+
+## Example
+
+- In the NBA data, `Team`, `Playoff`, `Conference` and `Division` are factors.
+
+
+```r
+nba &lt;- readRDS('./nba.rds')
+glimpse(nba)
+```
+
+```
+## Rows: 30
+## Columns: 28
+## $ Team       &lt;chr&gt; "Atlanta Hawks", "Boston Celtics", "Brooklyn Nets", "Charlo…
+## $ Playoff    &lt;fct&gt; N, Y, N, N, N, Y, N, N, N, Y, Y, Y, N, N, N, Y, Y, Y, Y, N,…
+## $ GP         &lt;int&gt; 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82, 82,…
+## $ MIN        &lt;int&gt; 3941, 3961, 3971, 3956, 3971, 3946, 3961, 3976, 3961, 3946,…
+## $ PTS        &lt;int&gt; 8475, 8529, 8741, 8874, 8440, 9091, 8390, 9020, 8509, 9304,…
+## $ W          &lt;int&gt; 24, 55, 28, 36, 27, 50, 24, 46, 39, 58, 65, 48, 42, 35, 22,…
+## $ L          &lt;int&gt; 58, 27, 54, 46, 55, 32, 58, 36, 43, 24, 17, 34, 40, 47, 60,…
+## $ P2M        &lt;int&gt; 2213, 2202, 2095, 2373, 2264, 2330, 2161, 2398, 2322, 2583,…
+## $ P2A        &lt;int&gt; 4471, 4483, 4190, 4873, 4736, 4314, 4354, 4566, 4756, 4611,…
+## $ P2p        &lt;dbl&gt; 49.49676, 49.11889, 50.00000, 48.69690, 47.80405, 54.01020,…
+## $ P3M        &lt;int&gt; 917, 939, 1041, 824, 906, 981, 967, 940, 886, 926, 1256, 74…
+## $ P3A        &lt;int&gt; 2544, 2492, 2924, 2233, 2549, 2636, 2688, 2536, 2373, 2369,…
+## $ P3p        &lt;dbl&gt; 36.04560, 37.68058, 35.60192, 36.90103, 35.54335, 37.21548,…
+## $ FTM        &lt;int&gt; 1298, 1308, 1428, 1656, 1194, 1488, 1167, 1404, 1207, 1360,…
+## $ FTA        &lt;int&gt; 1654, 1697, 1850, 2216, 1574, 1909, 1530, 1830, 1621, 1668,…
+## $ FTp        &lt;dbl&gt; 78.47642, 77.07720, 77.18919, 74.72924, 75.85769, 77.94657,…
+## $ OREB       &lt;int&gt; 743, 767, 792, 827, 790, 694, 666, 902, 830, 691, 739, 788,…
+## $ DREB       &lt;int&gt; 2693, 2878, 2852, 2901, 2873, 2761, 2717, 2748, 2756, 2877,…
+## $ AST        &lt;int&gt; 1946, 1842, 1941, 1770, 1923, 1916, 1858, 2059, 1868, 2402,…
+## $ TOV        &lt;int&gt; 1276, 1149, 1245, 1041, 1147, 1126, 1007, 1227, 1103, 1265,…
+## $ STL        &lt;int&gt; 638, 604, 512, 559, 626, 582, 578, 627, 628, 655, 699, 721,…
+## $ BLK        &lt;int&gt; 348, 373, 390, 373, 289, 312, 310, 404, 317, 612, 392, 340,…
+## $ PF         &lt;int&gt; 1606, 1618, 1688, 1409, 1571, 1524, 1578, 1533, 1508, 1607,…
+## $ PM         &lt;int&gt; -447, 294, -307, 21, -577, 77, -249, 121, -12, 490, 695, 11…
+## $ team       &lt;fct&gt; ATL, BOS, BKN, CHA, CHI, CLE, DAL, DEN, DET, GSW, HOU, IND,…
+## $ Conference &lt;fct&gt; E, E, E, E, E, E, W, W, E, W, W, E, W, W, W, E, E, W, W, E,…
+## $ Division   &lt;fct&gt; Southeast, Atlantic, Atlantic, Southeast, Central, Central,…
+## $ Rank       &lt;int&gt; 15, 2, 12, 10, 13, 4, 13, 9, 9, 2, 1, 5, 10, 11, 14, 6, 7, …
+```
+
+
+---
+
+## Visualization
+
+- Create a barchart of the number of 3 Pts attempts for the season. Add color to the bars to show if each team made the playoffs. 
+
+---
+
+
+```r
+ggplot(nba, aes(Team, P3A)) +
+  geom_col()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-11-1.png" width="100%" /&gt;
+
+---
+
+## Example (2)
+
+Flipping coordinates is useful to show the labels of the Teams.
+
+```r
+ggplot(nba, aes(Team, P3A)) +
+  geom_col() + 
+  coord_flip()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-12-1.png" width="100%" /&gt;
+
+---
+## Order the factor
+
+- `fct_reorder` Reorders the factor by another variable.
+
+
+```r
+nba %&gt;% 
+  mutate(Team=fct_reorder(Team, P3A)) %&gt;% 
+  ggplot(aes(Team, P3A, fill=Playoff)) +
+  geom_col() +
+  coord_flip()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-13-1.png" width="100%" /&gt;
+
+
+
+
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
