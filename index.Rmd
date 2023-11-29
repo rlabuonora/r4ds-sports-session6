@@ -25,6 +25,7 @@ knitr::opts_chunk$set(
 library(forcats)
 library(dplyr)
 library(ggplot2)
+library(readxl)
 ```
 
 ```{r xaringan-themer, include=FALSE, warning=FALSE}
@@ -178,7 +179,42 @@ nba %>%
   coord_flip()
 ```
 
+---
+## Function arguments and defaults
+
+- You can pass arguments with or without names to functions
+
+```{r}
+nba_data <- nba %>% 
+  mutate(Team=fct_reorder(Team, P3A)) 
+
+ggplot(data=nba_data, mapping=aes(x=Team, y=P3A, fill=Playoff)) +
+  geom_col() +
+  coord_flip()
+```
 
 
+---
+# Time series plots
 
+```{r}
+
+df <- read_excel('./mpd2018.xlsx', sheet = 'Full data')
+
+df_uy_usa <- df %>% 
+  filter(country %in% c("Uruguay", "United States"))
+
+
+plt <- df_uy_usa %>% 
+  filter(year>1800) %>% 
+  ggplot(aes(year, cgdppc)) + 
+  geom_line(aes(group=country, color=country)) + 
+  theme(legend.position = "bottom")
+
+```
+
+---
+```{r}
+plt
+```
 

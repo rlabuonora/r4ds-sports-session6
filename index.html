@@ -292,9 +292,49 @@ nba %&gt;%
 
 &lt;img src="index_files/figure-html/unnamed-chunk-13-1.png" width="100%" /&gt;
 
+---
+## Function arguments and defaults
+
+- You can pass arguments with or without names to functions
 
 
+```r
+nba_data &lt;- nba %&gt;% 
+  mutate(Team=fct_reorder(Team, P3A)) 
 
+ggplot(data=nba_data, mapping=aes(x=Team, y=P3A, fill=Playoff)) +
+  geom_col() +
+  coord_flip()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-14-1.png" width="100%" /&gt;
+
+
+---
+# Time series plots
+
+
+```r
+df &lt;- read_excel('./mpd2018.xlsx', sheet = 'Full data')
+
+df_uy_usa &lt;- df %&gt;% 
+  filter(country %in% c("Uruguay", "United States"))
+
+
+plt &lt;- df_uy_usa %&gt;% 
+  filter(year&gt;1800) %&gt;% 
+  ggplot(aes(year, cgdppc)) + 
+  geom_line(aes(group=country, color=country)) + 
+  theme(legend.position = "bottom")
+```
+
+---
+
+```r
+plt
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-16-1.png" width="100%" /&gt;
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
