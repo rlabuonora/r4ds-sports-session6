@@ -324,7 +324,13 @@ df_uy_usa &lt;- df %&gt;%
 plt &lt;- df_uy_usa %&gt;% 
   filter(year&gt;1800) %&gt;% 
   ggplot(aes(year, cgdppc)) + 
-  geom_line(aes(group=country, color=country)) + 
+  geom_line(aes(group=country, color=country)) +
+  scale_color_discrete("") +
+  labs(title="USA leaves Uruguay behind",
+       subtitle="Income gap widened last century",
+       x="Year",
+       y="Per Capita GDP") +
+  theme_minimal() +
   theme(legend.position = "bottom")
 ```
 
