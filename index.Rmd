@@ -151,7 +151,7 @@ glimpse(nba)
 ---
 
 ```{r}
-ggplot(nba, aes(Team, P3A)) +
+ggplot(data=nba, mapping=aes(Team, P3A)) +
   geom_col()
 ```
 
@@ -191,6 +191,8 @@ nba_data <- nba %>%
 ggplot(data=nba_data, mapping=aes(x=Team, y=P3A, fill=Playoff)) +
   geom_col() +
   coord_flip()
+
+ggplot(nba, aes(P2A,P3A)) + geom_point()
 ```
 
 
@@ -224,4 +226,54 @@ plt <- df_uy_usa %>%
 ```{r}
 plt
 ```
+
+---
+## Facets
+
+- Facets allow us to see different subsets of our data in different panes.
+
+---
+background-image: url(./imgs/left_vs_right.png)
+background-size: 65% 65%
+
+## Facets
+
+.footnote[[Mitch Henderson](https://www.mitchhenderson.org/)]
+
+
+---
+
+## Facets in ggplot
+
+- If we add a facetting layer to our ggplot, we get one pane for each subset of our _facetting variable_.
+
+```{r}
+xw_long <- readRDS('./xw_long.rds')
+glimpse(xw_long)
+```
+
+
+---
+## Facets
+
+```{r}
+stats_plot <- xw_long %>% 
+  filter(stat %in% c("STL","BLK","DREB")) %>% 
+  ggplot(aes(team, value, fill=stat)) +
+  geom_col() + 
+  coord_flip() +
+  facet_grid(~stat)
+```
+
+---
+
+
+```{r echo=FALSE}
+stats_plot
+```
+
+
+---
+## Scales
+
 

@@ -256,7 +256,7 @@ glimpse(nba)
 
 
 ```r
-ggplot(nba, aes(Team, P3A)) +
+ggplot(data=nba, mapping=aes(Team, P3A)) +
   geom_col()
 ```
 
@@ -309,6 +309,12 @@ ggplot(data=nba_data, mapping=aes(x=Team, y=P3A, fill=Playoff)) +
 
 &lt;img src="index_files/figure-html/unnamed-chunk-14-1.png" width="100%" /&gt;
 
+```r
+ggplot(nba, aes(P2A,P3A)) + geom_point()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-14-2.png" width="100%" /&gt;
+
 
 ---
 # Time series plots
@@ -341,6 +347,65 @@ plt
 ```
 
 &lt;img src="index_files/figure-html/unnamed-chunk-16-1.png" width="100%" /&gt;
+
+---
+## Facets
+
+- Facets allow us to see different subsets of our data in different panes.
+
+---
+background-image: url(./imgs/left_vs_right.png)
+background-size: 65% 65%
+
+## Facets
+
+.footnote[[Mitch Henderson](https://www.mitchhenderson.org/)]
+
+
+---
+
+## Facets in ggplot
+
+- If we add a facetting layer to our ggplot, we get one pane for each subset of our _facetting variable_.
+
+
+```r
+xw_long &lt;- readRDS('./xw_long.rds')
+glimpse(xw_long)
+```
+
+```
+## Rows: 360
+## Columns: 4
+## $ team  &lt;chr&gt; "Dallas Mavericks", "Dallas Mavericks", "Dallas Mavericks", "Dal…
+## $ conf  &lt;fct&gt; W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W…
+## $ stat  &lt;chr&gt; "GP", "MIN", "PTS", "W", "L", "P2M", "P2A", "P2p", "P3M", "P3A",…
+## $ value &lt;dbl&gt; 82.00000, 3961.00000, 8390.00000, 24.00000, 58.00000, 2161.00000…
+```
+
+
+---
+## Facets
+
+
+```r
+stats_plot &lt;- xw_long %&gt;% 
+  filter(stat %in% c("STL","BLK","DREB")) %&gt;% 
+  ggplot(aes(team, value, fill=stat)) +
+  geom_col() + 
+  coord_flip() +
+  facet_grid(~stat)
+```
+
+---
+
+
+&lt;img src="index_files/figure-html/unnamed-chunk-19-1.png" width="100%" /&gt;
+
+
+---
+## Scales
+
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
