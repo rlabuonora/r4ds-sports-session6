@@ -259,7 +259,7 @@ glimpse(xw_long)
 ```{r}
 stats_plot <- xw_long %>% 
   filter(stat %in% c("STL","BLK","DREB")) %>% 
-  ggplot(aes(team, value, fill=stat)) +
+  ggplot(aes(x=team, y=value, fill=stat)) +
   geom_col() + 
   coord_flip() +
   facet_grid(~stat)
